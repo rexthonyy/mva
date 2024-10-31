@@ -1,0 +1,75 @@
+.rex-btn-primary {
+    background-color: transparent;
+    border: 1px solid #D059FF;
+    border-radius: 4px;
+}
+
+.rex-btn-primary:hover {
+    cursor: pointer;
+    background-color: #D059FF;
+    border: 0;
+    transition: .4s;
+}
+
+.rex-btn-primary:disabled {
+    background-color: #ee6f1434;
+}
+
+.rex-btn-secondary {
+    background-color: transparent;
+    border: 1px solid #535353;
+    border-radius: 4px;
+}
+
+.rex-btn-secondary:hover {
+    cursor: pointer;
+    background-color: #5826FF;
+    transition: .3s;
+}
+
+.rex-btn-tertiary {
+    border: 0;
+}
+
+.rex-btn-tertiary:hover {
+    cursor: pointer;
+    background-color: rgb(41, 211, 223);
+    color: white;
+    transition: .3s;
+}
+
+.rex-btn-white {
+    border: 0;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.rex-btn-white:hover {
+    cursor: pointer;
+    background-color: rgba(168, 168, 168, 0.397);
+    transition: .3s;
+}
+
+.rex-btn-danger {
+    background-color: rgb(250, 10, 10);
+    border: 0;
+    border-radius: 4px;
+}
+
+.rex-btn-danger:hover {
+    cursor: pointer;
+    background-color: rgba(240, 46, 46, 0.911);
+    transition: .3s;
+}
+
+.rex-btn-transparent {
+    background-color: transparent;
+    border: 0;
+    border-radius: 4px;
+}
+
+.rex-btn-transparent:hover {
+    cursor: pointer;
+    background-color: rgba(119, 119, 119, 0.39);
+    transition: .3s;
+}

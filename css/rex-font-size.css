@@ -1,0 +1,124 @@
+.rex-fs-xxxxxx-large{
+	font-size: 46px;
+}
+
+.rex-fs-xxxxx-large{
+	font-size: 44px;
+}
+
+.rex-fs-xxxx-large{
+	font-size: 36px;
+}
+
+.rex-fs-xxx-large{
+	font-size: 30px;
+}
+
+.rex-fs-xx-large{
+	font-size: 26px;
+}
+
+.rex-fs-x-large{
+	font-size: 22px;
+}
+
+.rex-fs-large{
+	font-size: 18px;
+}
+
+.rex-fs-normal{
+	font-size: 15px;
+}
+
+.rex-fs-small{
+	font-size: 13px;
+}
+
+.rex-fs-x-small{
+	font-size: 12px;
+}
+
+.rex-fs-xx-small{
+	font-size: 10px;
+}
+
+.rex-lh-x-large{
+	line-height: 41px;
+}
+
+.rex-lh-large{
+	line-height: 31px;
+}
+
+.rex-lh-normal{
+	line-height: 27px;
+}
+
+.rex-lh-small{
+	line-height: 23px;
+}
+
+.rex-lh-x-small{
+	line-height: 19px;
+}
+
+.rex-lh-100pp{
+	line-height: 100%;
+}
+
+@media (max-width: 1280px){
+	
+}
+
+@media (max-width: 1000px){
+	
+}
+
+@media (max-width: 800px){
+	
+}
+
+@media (max-width: 600px){
+	.rex-fs-xxxxxx-large{
+		font-size: 38px;
+	}
+	.rex-fs-xxxxx-large{
+		font-size: 34px;
+	}
+
+	.rex-fs-xxxx-large{
+		font-size: 34px;
+	}
+
+	.rex-fs-xxx-large{
+		font-size: 28px;
+	}
+
+	.rex-fs-xx-large{
+		font-size: 24px;
+	}
+
+	.rex-fs-x-large{
+		font-size: 20px;
+	}
+
+	.rex-fs-large{
+		font-size: 18px;
+	}
+
+	.rex-fs-normal{
+		font-size: 14px;
+	}
+
+	.rex-fs-small{
+		font-size: 12px;
+	}
+
+	.rex-fs-x-small{
+		font-size: 11px;
+	}
+
+	.rex-fs-xx-small{
+		font-size: 10px;
+	}
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="/mva/images/icon.png" type="image/png" />
+    <link rel="shortcut icon" href="/mva/images/icon.png" type="image/png" />
+    <link type="image/x-icon" rel="icon" href="/mva/images/icon.png" />
+    <title>Market Volatility Analyser</title>
+    <link type="text/css" rel="stylesheet" href="/mva/css/index.css" />
+    <script type="text/javascript" src="/mva/js/brain.js"></script>
+    <script type="text/javascript" src="/mva/js/chart.min.js"></script>
+    <script type="text/javascript" src="/mva/js/_modals.js"></script>
+    <script type="text/javascript" src="/mva/js/util.js"></script>
+    <script type="text/javascript" src="/mva/js/index.js"></script>
+    <script>
+        const chartBackgroundColor = "rgba(160, 49, 149, 0.234)";
+        const chartBorderColor = "rgb(208, 89, 255)";
+    </script>
+</head>
+
+<body>
+    <div class="custom-responsive-docs-container">
+        <input type="checkbox" id="docsCheck" class="rex-display-gone">
+        <label id="docsCheckToggle" for="docsCheck">
+			<div class="custom-docs-toggle rex-display-flex rex-center-flex-items">
+				<img alt="icon" src="/mva/images/ic_cross.png" class="rex-width-20px rex-height-20px">
+			</div>
+			<div class="custom-docs-toggle rex-display-flex rex-center-flex-items">
+				<img alt="icon" src="/mva/images/ic_hamburger.png" class="rex-width-20px rex-height-20px">
+			</div>
+		</label>
+
+        <div class="custom-docs-sidebar custom-background-level-2">
+            <div class="custom-docs-sidebar-sticky rex-pad16px rex-height-100vh rex-overflow-auto">
+
+                <div class="rex-vertical-align-span">
+                    <img src="/mva/images/icon.png" class="rex-width-24px rex-height-24px rex-mr-8px">
+                    <span class="rex-fs-normal rex-weight-bold rex-color-white" title="The network will stop training whenever one of the three criteria is met: the training error has gone below the threshold (default 0.005), or the max number of iterations (default 20000) has been reached. or timeout">Market Volatility Analyser</span>
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],">Activation Type</h3>
+                <select id="activationSelectorID" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal rex-mt-4px rex-hover">
+                    <option value="sigmoid">Sigmoid</option>
+                    <option value="relu">RELU</option>
+                    <option value="leaky-relu">Leaky-RELU</option>
+                    <option value="tanh">TANH</option>
+                </select>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="array of ints for the sizes of the hidden layers in the network">Hidden Layers</h3>
+                <div class="rex-mt-4px">
+                    <input id="hiddenLayersID" required class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="3" placeholder="4,3">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="the maximum times to iterate the training data --> number greater than 0">Iterations</h3>
+                <div class="rex-mt-4px">
+                    <input id="iterationsID" required step="1" type="number" min="0" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="20000" placeholder="20000">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="the acceptable error percentage from training data --> number between 0 and 1">Error Threshold</h3>
+                <div class="rex-mt-4px">
+                    <input id="errorThresholdID" required step="any" type="number" min="0" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="0.005" placeholder="0.005">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="the max number of milliseconds to train for --> number greater than 0. Default --> Infinity">Training Timeout (milliseconds)</h3>
+                <div class="rex-mt-4px">
+                    <input id="timeoutID" required step="1" type="number" min="0" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="60000" placeholder="10000">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="iterations between logging out --> number greater than 0">Log Period</h3>
+                <div class="rex-mt-4px">
+                    <input id="logPeriodID" required step="any" type="number" min="0" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="250" placeholder="250">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="scales with delta to effect training rate --> number between 0 and 1">Learning Rate</h3>
+                <div class="rex-mt-4px">
+                    <input id="learningRateID" required step="any" type="number" min="0" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="0.3" placeholder="0.3">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="scales with next layer's change value --> number between 0 and 1">Momentum</h3>
+                <div class="rex-mt-4px">
+                    <input id="momentumID" required step="any" type="number" min="0" class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal" value="0.1" placeholder="0.1">
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="The data used in training the neural network --> [dayOfWeek,dayOfMonth,week,month,v0,v1,...]">Training Data</h3>
+                <div class="rex-mt-4px">
+                    <textarea id="trainingDataID" required class="rex-input-primary rex-no-border rex-width-100pp rex-height-200px rex-fs-normal rex-resize-vertical">{"2023-02-23":[0.1,0.8,0.23,0.32,0.45],"2023-02-24":[0.11,0.21,0.63,0.44,0.28]}</textarea>
+                </div>
+
+                <h3 class="rex-fs-small rex-color-gray rex-mt-16px" title="Your input to the neural network, [dayOfWeek,dayOfMonth,week,month,v0,v1,...]">Input</h3>
+                <div class="rex-mt-4px">
+                    <input id="inputID" type="date" required class="rex-input-primary rex-no-border rex-width-100pp rex-fs-normal">
+                </div>
+
+                <button id="saveNetworkBtnID" class="rex-btn-secondary rex-mt-16px rex-width-100pp rex-center-text rex-fs-normal rex-pad16px rex-color-white rex-weight-bold rex-display-gone">Save Network</button>
+                <button id="loadNetworkBtnID" class="rex-btn-secondary rex-mt-16px rex-width-100pp rex-center-text rex-fs-normal rex-pad16px rex-color-white rex-weight-bold">Load Network</button>
+                <button id="generateBtnID" class="rex-btn-primary rex-mt-16px rex-width-100pp rex-center-text rex-fs-normal rex-pad16px rex-color-white rex-weight-bold">Generate</button>
+            </div>
+        </div>
+
+        <div class="custom-docs-content custom-main-background-primary rex-min-height-100vh">
+            <div id="mainDisplayID" class="rex-height-100vh rex-pad32px rex-nowrap rex-overflow-auto rex-display-gone">
+                <!-- progress -->
+                <div id="progressContainer" class="custom-background-level-2 rex-curDiv-8px rex-border-darkgray rex-pad8px">
+                    <p id="learningHeader" class="rex-fs-small rex-color-darkgray">Learning</p>
+                    <div class="custom-background-level-1 rex-mt-4px rex-curDiv-16px rex-height-10px rex-width-100pp">
+                        <div id="learningProgress" style="width: 0%" class="rex-height-100pp rex-background-primary rex-curDiv-16px"></div>
+                    </div>
+                    <p id="iterationHeader" class="rex-fs-small rex-color-darkgray rex-mt-8px">Iterations</p>
+                    <div class="custom-background-level-1 rex-mt-4px rex-curDiv-16px rex-height-10px rex-width-100pp">
+                        <div id="iterationProgress" style="width: 0%" class="rex-height-100pp rex-background-primary rex-curDiv-16px"></div>
+                    </div>
+                    <p id="timeoutHeader" class="rex-fs-small rex-color-darkgray rex-mt-8px">Timeout</p>
+                    <div class="custom-background-level-1 rex-mt-4px rex-curDiv-16px rex-height-10px rex-width-100pp">
+                        <div id="timeoutProgress" style="width: 0%" class="rex-height-100pp rex-background-primary rex-curDiv-16px"></div>
+                    </div>
+                </div>
+
+                <div id="outputContainer" class="rex-mt-16px rex-display-gone">
+                    <!-- chart -->
+                    <div class="rex-curDiv-8px custom-background-level-2 rex-pad16px rex-display-flex rex-center-flex-items">
+                        <canvas id="myChart" height="140"></canvas>
+                    </div>
+
+                    <!-- summary -->
+                    <div id="summaryContainer" class="custom-stat-grid rex-mt-16px">
+                        <div class="custom-background-level-2 rex-curDiv-8px rex-border-darkgray rex-pad8px">
+                            <p class="rex-fs-small rex-color-darkgray">Status</p>
+                            <div class="rex-mt-8px rex-weight-bold">
+                                <span class="rex-fs-normal rex-color-white rex-mr-8px">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rex-height-100px"></div>
+                </div>
+            </div>
+            <div id="loadingDisplayID" class="rex-height-100vh rex-display-gone rex-center-flex-items">
+                <img src="/mva/images/ic_loading.gif" class="rex-width-100px rex-height-100px">
+            </div>
+        </div>
+    </div>
+    <div id="modalbackground" class="rex-modal-background rex-center-flex-items rex-display-gone">
+        <!-- notification password -->
+        <div class="modal custom-background-level-1 rex-display-gone rex-pad32px rex-overflow-auto">
+            <p id="notificationLabael" class="rex-color-white rex-fs-large rex-weight-bold">Success</p>
+            <div id="notificationBody" class="rex-color-white rex-fs-normal rex-mt-24px rex-lh-normal">
+                Your password has been changed successfully!
+            </div>
+            <div id="notificationBtn" class="rex-btn-primary rex-center-text rex-color-white rex-pad8px rex-mt-24px rex-width-100pp rex-fs-normal rex-hover">
+                OKay
+            </div>
+        </div>
+        <!-- load network -->
+        <div class="modal resp-width-800-calc-100pp-35-below-754-shared-css custom-background-level-1 rex-display-gone rex-pad32px rex-border-gray rex-curDiv-8px rex-overflow-auto">
+            <p class="rex-fs-large rex-weight-bold rex-color-white">Load Network</p>
+            <div class="rex-fs-normal rex-mt-24px rex-height-70vh">
+                <textarea id="loadNetworkInput" placeholder="Paste your network JSON here..." required class="rex-input-primary rex-width-100pp rex-height-100pp rex-noresize rex-fs-normal rex-no-border"></textarea>
+            </div>
+            <div class="rex-center-text rex-color-white rex-mt-24px rex-width-100pp rex-fs-normal rex-text-align-right">
+                <button id="loadNetworkCancelBtn" class="rex-btn-secondary rex-hover rex-pad16px rex-mr-8px rex-color-white rex-fs-normal">Cancel</button>
+                <button id="loadNetworkLoadBtn" class="rex-btn-primary rex-hover rex-pad16px rex-color-white rex-fs-normal">Load</button>
+            </div>
+        </div>
+        <!-- save network -->
+        <div class="modal resp-width-800-calc-100pp-35-below-754-shared-css custom-background-level-1 rex-display-gone rex-pad32px rex-border-gray rex-curDiv-8px rex-overflow-auto">
+            <p class="rex-fs-large rex-weight-bold rex-color-white">Save Network</p>
+            <div class="rex-fs-normal rex-mt-24px rex-height-70vh">
+                <textarea id="saveNetworkInput" placeholder="Paste your network JSON here..." required class="rex-input-primary rex-width-100pp rex-height-100pp rex-noresize rex-fs-normal rex-no-border"></textarea>
+            </div>
+            <div class="rex-center-text rex-color-white rex-mt-24px rex-width-100pp rex-fs-normal rex-text-align-right">
+                <button id="saveNetworkCancelBtn" class="rex-btn-secondary rex-hover rex-pad16px rex-mr-8px rex-color-white rex-fs-normal">Cancel</button>
+                <button id="saveNetworkCopyBtn" class="rex-btn-primary rex-hover rex-pad16px rex-color-white rex-fs-normal">Copy</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

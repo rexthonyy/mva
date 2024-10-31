@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: small;
+    background-color: rgb(250, 250, 250);
+}
+
+
+/*Highlight color*/
+
+::-moz-selection {
+    color: white;
+    background: rgb(56, 89, 220);
+}
+
+::selection {
+    color: white;
+    background: rgb(56, 89, 220);
+}
+
+.rex-item-selected-2 {
+    color: #EE6F14;
+    font-weight: bold;
+}
+
+.rex-underline-onhover:hover {
+    text-decoration: underline;
+}
+
+.rex-underline {
+    text-decoration: underline;
+}
+
+.rex-weight-normal {
+    font-weight: normal;
+}
+
+.rex-weight-bold {
+    font-weight: bold;
+}
+
+.rex-text-underline {
+    text-decoration: underline;
+}
+
+.rex-transition-width-250ms {
+    transition: width 0.25s;
+}
+
+.rex-space-0 {
+    height: 0;
+}
+
+.rex-space-2pp {
+    height: 2%;
+}
+
+.rex-space-4px {
+    padding: 2px;
+}
+
+.rex-space-8px {
+    padding: 4px;
+}
+
+.rex-space-16px {
+    padding: 8px;
+}
+
+.rex-space-24px {
+    padding: 12px;
+}
+
+.rex-space-32px {
+    padding: 16px;
+}
+
+.rex-space-64px {
+    padding: 32px;
+}
+
+.rex-space-10pp {
+    height: 10%;
+}
+
+.rex-nowrap {
+    white-space: nowrap;
+}
+
+.rex-normalwrap {
+    white-space: normal;
+}
+
+.rex-text-overflow-ellipses {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rex-outline-none {
+    outline: none;
+}
+
+.rex-overflow-ellipses {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rex-resize-vertical{
+    resize: vertical;
+}
+
+.rex-noresize {
+    resize: none;
+}
+
+.rex-line-through {
+    text-decoration: line-through;
+}
